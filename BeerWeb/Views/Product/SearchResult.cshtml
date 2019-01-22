@@ -24,8 +24,8 @@
 }
 <table class="table">
     <tr>
-        <th>@Html.ActionLink("Name", "SearchResult", new { sortOrder = Model.SortByNameParam})</th>
-        <th>@Html.ActionLink("Price", "SearchResult", new { sortOrder = Model.SortByPriceParam })</th>
+        <th>@Html.ActionLink("Name", "SearchResult", new { searchProduct = Model.Search, sortOrder = Model.SortByNameParam })</th>
+        <th>@Html.ActionLink("Price", "SearchResult", new { searchProduct = Model.Search, sortOrder = Model.SortByPriceParam })</th>
         <th></th>
         <th></th>
         <th></th>

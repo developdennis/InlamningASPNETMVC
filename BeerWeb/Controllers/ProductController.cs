@@ -62,7 +62,7 @@ namespace BeerWeb.Controllers
                 entities.Products.Remove(product);
                 entities.SaveChanges();
 
-                return RedirectToAction("Index","Category");
+                return RedirectToAction("Index", "Category");
             }
         }
         [HttpGet]
@@ -91,7 +91,7 @@ namespace BeerWeb.Controllers
         public ActionResult EditProduct(ViewModels.EditProductViewModel modified)
         {
             SetupAvailableCatgoriesEdit(modified);
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(modified);
             }
@@ -107,10 +107,10 @@ namespace BeerWeb.Controllers
 
                 entities.SaveChanges();
 
-                return RedirectToAction("Index","Category");
+                return RedirectToAction("Index", "Category");
             }
         }
-        
+
         void SetupAvailableCatgoriesNew(NewProductViewModel model)
         {
             using (var entities = new BeerWeb.Models.BeerModel())
@@ -158,7 +158,7 @@ namespace BeerWeb.Controllers
         public ActionResult NewProduct(NewProductViewModel model)
         {
             SetupAvailableCatgoriesNew(model);
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return View(model);
             }
@@ -175,7 +175,7 @@ namespace BeerWeb.Controllers
                 entities.Products.Add(newproduct);
                 entities.SaveChanges();
 
-                return RedirectToAction("Index","Category");
+                return RedirectToAction("Index", "Category");
             }
 
         }
@@ -187,7 +187,6 @@ namespace BeerWeb.Controllers
 
             using (var db = new BeerModel())
             {
-
                 viewmodel.ProductsList.AddRange(db.Products.Where(x => x.Description.ToUpper().Contains(searchProduct.ToUpper()) || x.Name.ToUpper().Contains(searchProduct.ToUpper())));
                 viewmodel = Sort(sortOrder, viewmodel);
 
@@ -215,32 +214,27 @@ namespace BeerWeb.Controllers
             model.SortByNameParam = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             model.SortByPriceParam = sortOrder == "Price" ? "price_desc" : "Price";
 
-
-            using (var db = new BeerWeb.Models.BeerModel())
+            switch (sortOrder)
             {
-                switch (sortOrder)
-                {
-                    case "name_desc":
-                        model.ProductsList = model.ProductsList.OrderByDescending(x => x.Name).ToList();
-                        break;
+                case "name_desc":
+                    model.ProductsList = model.ProductsList.OrderByDescending(x => x.Name).ToList();
+                    break;
 
-                    case "Price":
-                        model.ProductsList = model.ProductsList.OrderBy(x => x.Price).ToList();
-                        break;
+                case "Price":
+                    model.ProductsList = model.ProductsList.OrderBy(x => x.Price).ToList();
+                    break;
 
-                    case "price_desc":
-                        model.ProductsList = model.ProductsList.OrderByDescending(x => x.Price).ToList();
-                        break;
+                case "price_desc":
+                    model.ProductsList = model.ProductsList.OrderByDescending(x => x.Price).ToList();
+                    break;
 
-                    default:
-                        model.ProductsList = model.ProductsList.OrderBy(x => x.Name).ToList();
-                        break;
-                }
-
-
-                return model;
+                default:
+                    model.ProductsList = model.ProductsList.OrderBy(x => x.Name).ToList();
+                    break;
             }
-
+            
+            return model;
+            
         }
     }
 }
