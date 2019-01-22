@@ -18,8 +18,9 @@ namespace BeerWeb.ViewModels
         [StringLength(250,MinimumLength = 3, ErrorMessage = "Enter atleast 3 characters and maximum 250 characters.")]
         public string Description { get; set; }
 
-        [Required]
-        [Range(0.01,1000, ErrorMessage = "We don't sell free beer or beer that costs more than $999")]
+        [Required(ErrorMessage = "Field price is required.")]
+        [RegularExpression(@"^\d+\,\d{0,2}$", ErrorMessage = "Please enter a valid price, ex: 10,00 / 10")]
+        [Range(0, 9999999999999999.99, ErrorMessage = "Please enter a valid price, ex: 10,00 / 10")]
         public decimal Price { get; set; }
 
         public string PicURL { get; set; }

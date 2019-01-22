@@ -10,7 +10,7 @@ namespace BeerWeb.ViewModels
     {
         public string SortByNameParam { get; set; }
         public string SortByPriceParam { get; set; }
-
+        public string Search { get; set; }
 
         public List<Product> ProductsList { get; set; }
 

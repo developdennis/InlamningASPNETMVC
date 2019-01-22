@@ -180,51 +180,65 @@ namespace BeerWeb.Controllers
 
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public ActionResult ShowAllProducts(string searchProduct, string sortOrder)
+        public ActionResult SearchResult(string sortOrder, string searchProduct)
         {
-            using (var db = new Models.BeerModel())
+            var viewmodel = new ShowAllProductsViewModel();
+            viewmodel.Search = searchProduct;
+
+            using (var db = new BeerModel())
             {
-                var viewmodel = new ViewModels.ShowAllProductsViewModel();
-                if (!string.IsNullOrEmpty(searchProduct))
-                {
-                    viewmodel.ProductsList.AddRange(db.Products.Where(x => x.Description.ToUpper().Contains(searchProduct.ToUpper()) || x.Name.ToUpper().Contains(searchProduct.ToUpper())));
-                    return View(viewmodel);
-                }
-                return View(Sort(sortOrder));
+
+                viewmodel.ProductsList.AddRange(db.Products.Where(x => x.Description.ToUpper().Contains(searchProduct.ToUpper()) || x.Name.ToUpper().Contains(searchProduct.ToUpper())));
+                viewmodel = Sort(sortOrder, viewmodel);
+
+                return View(viewmodel);
 
             }
         }
 
-        public ShowAllProductsViewModel Sort(string sortOrder)
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult ShowAllProducts(string sortOrder)
         {
-            var products = new ShowAllProductsViewModel();
-            products.SortByNameParam = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            products.SortByPriceParam = sortOrder == "Price" ? "price_desc" : "Price";
+            using (var db = new Models.BeerModel())
+            {
+                var viewmodel = new ViewModels.ShowAllProductsViewModel();
+                viewmodel.ProductsList.AddRange(db.Products);
+                viewmodel = Sort(sortOrder, viewmodel);
+                return View(viewmodel);
+            }
+        }
+
+        public ShowAllProductsViewModel Sort(string sortOrder, ShowAllProductsViewModel model)
+        {
+
+            model.SortByNameParam = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            model.SortByPriceParam = sortOrder == "Price" ? "price_desc" : "Price";
+
 
             using (var db = new BeerWeb.Models.BeerModel())
             {
                 switch (sortOrder)
                 {
                     case "name_desc":
-                        products.ProductsList.AddRange(db.Products.OrderByDescending(x => x.Name));
+                        model.ProductsList = model.ProductsList.OrderByDescending(x => x.Name).ToList();
                         break;
 
                     case "Price":
-                        products.ProductsList.AddRange(db.Products.OrderBy(x => x.Price));
+                        model.ProductsList = model.ProductsList.OrderBy(x => x.Price).ToList();
                         break;
 
                     case "price_desc":
-                        products.ProductsList.AddRange(db.Products.OrderByDescending(x => x.Price));
+                        model.ProductsList = model.ProductsList.OrderByDescending(x => x.Price).ToList();
                         break;
 
                     default:
-                        products.ProductsList.AddRange(db.Products.OrderBy(x => x.Name));
+                        model.ProductsList = model.ProductsList.OrderBy(x => x.Name).ToList();
                         break;
                 }
 
-                return products;
+
+                return model;
             }
 
         }
