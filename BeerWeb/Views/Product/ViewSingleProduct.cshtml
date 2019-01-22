@@ -1,0 +1,61 @@
+﻿@model BeerWeb.ViewModels.ViewSingleProductViewModel
+
+
+@section Search{
+    @using (Html.BeginForm("ShowAllProducts", "Product", FormMethod.Get))
+    {
+        <div style="border: solid black 1px; padding-top: 5px;">
+            <h4 style="text-align: center;">Search</h4>
+            <table class="table">
+                <tr>
+                    <th>Search product by name or description</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>@Html.TextBox("SearchProduct", null, new { placeholder = "Product/Description" })</td>
+                    <td><input type="submit" value="Search" /></td>
+                </tr>
+            </table>
+        </div>
+    }
+    <br /> <br />
+}
+
+           <div style="text-align: center;">
+               @Html.HiddenFor(x => x.Id)
+               <h2>@Model.Name</h2>
+               <img style="width: 300px; height: 400px;" src="@Model.PicURL" />
+
+               <h5>@Model.Description</h5>
+               <h6>Price: $@Model.Price</h6>
+
+               <input id="buttOn" value="More Info" type="button" onclick="FetchObject()" />
+               <p id="moreInfo"></p>
+           </div>
+
+@section  scripts
+{
+    <script type="text/javascript">
+
+        function FetchObject() {
+        $.ajax({
+        dataType: "json",
+            url: '@Url.Action("GetMoreInfo", "Product", new { id = Model.Id})',
+            data: "",
+        success: function (data) {
+            console.log(data);
+            $("#moreInfo").text('There is ' + data.UnitsInStock + ' left in stock and delivery time is ' + data.DeliveryTime);
+            $("#buttOn").hide()
+            }
+            });
+        }
+
+
+
+    </script>
+    
+    }
+
+
+

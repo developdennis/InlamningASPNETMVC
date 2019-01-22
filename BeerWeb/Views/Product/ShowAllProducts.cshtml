@@ -1,0 +1,49 @@
+﻿@model BeerWeb.ViewModels.ShowAllProductsViewModel
+@{
+    ViewBag.Title = "View all products";
+}
+
+@section Search{
+    @using (Html.BeginForm("ShowAllProducts", "Product", FormMethod.Get))
+    {
+        <div style="border: solid black 1px; padding-top: 5px;">
+            <h4 style="text-align: center;">Search</h4>
+            <table class="table">
+                <tr>
+                    <th>Search product by name or description</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>@Html.TextBox("SearchProduct", null, new { placeholder = "Product/Description" })</td>
+                    <td><input type="submit" value="Search" /></td>
+                </tr>
+            </table>
+        </div>
+    }
+    <br /> <br />
+}
+
+<table class="table">
+    <tr>
+        <th>@Html.ActionLink("Name","ShowAllProducts", new { sortOrder = Model.SortByNameParam })</th>
+        <th>Description</th>
+        <th>@Html.ActionLink("Price", "ShowAllProducts", new { sortOrder = Model.SortByPriceParam})</th>
+        <th></th>
+    </tr>
+    @foreach (var p in Model.ProductsList)
+    {
+    <tr>
+        <td>@Html.ActionLink(p.Name, "ViewSingleProduct", new { id = p.Id }) </td>
+        <td>@p.Description</td>
+        <td>@p.Price</td>
+        @if (User.IsInRole("Admin") || User.IsInRole("ProductManager"))
+        {
+            <td>@Html.ActionLink("Edit", "EditProduct", new { id = p.Id })</td>
+            <td> @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = p.Id }, new { onclick = "return confirm('Är du säker att du vill radera?');" })</td>
+        }
+    </tr>
+    }
+
+</table>
+

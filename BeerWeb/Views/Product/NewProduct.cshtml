@@ -1,0 +1,74 @@
+﻿@model BeerWeb.ViewModels.NewProductViewModel
+@{
+    ViewBag.Title = "New product";
+}
+
+@section Search{
+    @using (Html.BeginForm("ShowAllProducts", "Product", FormMethod.Get))
+    {
+        <div style="border: solid black 1px; padding-top: 5px;">
+            <h4 style="text-align: center;">Search</h4>
+            <table class="table">
+                <tr>
+                    <th>Search product by name or description</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>@Html.TextBox("SearchProduct", null, new { placeholder = "Product/Description" })</td>
+                    <td><input type="submit" value="Search" /></td>
+                </tr>
+            </table>
+        </div>
+    }
+    <br /> <br />
+}
+
+@using (Html.BeginForm(FormMethod.Post))
+{
+    <table class="table">
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>
+                @Html.HiddenFor(p => p.Id)
+                @Html.TextBoxFor(p => p.Name)
+                @Html.ValidationMessageFor(p => p.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>Product price</td>
+            <td>
+                @Html.TextBoxFor(p => p.Price)
+                @Html.ValidationMessageFor(p => p.Price)
+            </td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>
+                @Html.DropDownListFor(p => p.Category_Id, Model.Category)
+                @Html.ValidationMessageFor(p => p.Category_Id)
+            </td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>
+                @Html.TextAreaFor(p => p.Description)
+                @Html.ValidationMessageFor(p => p.Description)
+
+            </td>
+        </tr>
+        <tr>
+            <td>Picture url: (optional)</td>
+            <td>
+                @Html.TextBoxFor(p => p.PicURL)
+                @Html.ValidationMessageFor(p => p.PicURL)
+            </td>
+        </tr>
+    </table>
+    <input type="submit" value="Save product" />
+
+}

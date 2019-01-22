@@ -1,0 +1,22 @@
+﻿@model IEnumerable<BeerWeb.ViewModels.ViewAllUsersViewModel>
+@{
+    ViewBag.Title = "ViewUsers";
+}
+
+<h2>Users</h2>
+
+<table class="table">
+    <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th></th>
+    </tr>
+    @foreach(var u in Model)
+    {
+        <tr>
+            <td>@u.UserName</td>
+            <td>@u.Role</td>
+            <td>@Html.ActionLink("Edit", "EditUser", new {id = u.Id })</td>
+        </tr>
+    }
+</table>

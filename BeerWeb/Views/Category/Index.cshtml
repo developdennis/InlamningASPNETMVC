@@ -1,0 +1,58 @@
+﻿@model BeerWeb.ViewModels.HomePageViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+@section Search{
+    @using (Html.BeginForm("ShowAllProducts", "Product", FormMethod.Get))
+    {
+        <div style="border: solid black 1px; padding-top: 5px;">
+            <h4 style="text-align: center;">Search</h4>
+            <table class="table">
+                <tr>
+                    <th>Search product by name or description</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>@Html.TextBox("SearchProduct", null, new { placeholder = "Product/Description" })</td>
+                    <td><input type="submit" value="Search" /></td>
+                </tr>
+            </table>
+        </div>
+    }
+    <br /> <br />
+}
+
+<div>
+    <ul>
+        @if (User.IsInRole("Admin") || User.IsInRole("ProductManager"))
+        {
+            <li>@Html.ActionLink("Add new category", "NewCategory", "Category")</li>
+            <li>@Html.ActionLink("Add new product", "NewProduct", "Product")</li>
+        }
+    </ul>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Category Name</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    @foreach (var c in Model.CategoryList)
+    {
+    <tr>
+        <td> @c.Name</td>
+        <td> @Html.ActionLink("View products", "ViewProducts", "Product", new { id = c.Id }, htmlAttributes: null)</td>
+
+        @if (User.IsInRole("Admin") || User.IsInRole("ProductManager"))
+        {
+            <td> @Html.ActionLink("Edit category", "EditCategory", "Category", new { id = c.Id }, htmlAttributes: null)</td>
+            <td> @Html.ActionLink("Delete category", "DeleteCategory", "Category", new { id = c.Id },  new { onclick = "return confirm('Are you sure you want to delete this category?');" })</td>
+        }
+        <td></td>
+    </tr>
+    }
+</table>
