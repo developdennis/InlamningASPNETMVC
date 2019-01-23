@@ -31,14 +31,14 @@
             <td>Name</td>
             <td>
                 @Html.HiddenFor(p => p.Id)
-                @Html.TextBoxFor(p => p.Name)
+                @Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(p => p.Name)
             </td>
         </tr>
         <tr>
             <td>Description</td>
             <td>
-                @Html.TextAreaFor(p => p.Description)
+                @Html.TextAreaFor(p => p.Description, new { @class = "form-control" })
                 @Html.ValidationMessageFor(p => p.Description)
 
             </td>
@@ -46,21 +46,21 @@
         <tr>
             <td>Product price</td>
             <td>
-                @Html.TextBoxFor(p => p.Price)
+                @Html.TextBoxFor(p => p.Price, new  {@class="form-control" })
                 @Html.ValidationMessageFor(p => p.Price)
             </td>
         </tr>
         <tr>
             <td>Category</td>
             <td>
-                @Html.DropDownListFor(p => p.Category_Id, Model.Category)
+                @Html.DropDownListFor(p => p.Category_Id, Model.Category, new { @class = "form-control" })
                 @Html.ValidationMessageFor(p => p.Category_Id)
             </td>
         </tr>
         <tr>
             <td>(Optional) Picture URL:</td>
             <td>
-                @Html.TextBoxFor(p => p.PicURL)
+                @Html.TextBoxFor(p => p.PicURL, new { @class = "form-control" })
                 @Html.ValidationMessageFor(p => p.PicURL)
             </td>
         </tr>

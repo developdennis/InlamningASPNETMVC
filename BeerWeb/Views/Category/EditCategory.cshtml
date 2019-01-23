@@ -31,10 +31,10 @@
     <table class="table table-bordered table-hover">
 
         <tr>
-            <td>Name</td>
+            <td>@Html.LabelFor(x=>x.Name, new { @class = "form-control" })</td>
             <td class="active">
                 @Html.HiddenFor(p => p.Id)
-                @Html.TextBoxFor(p => p.Name)
+                @Html.TextBoxFor(p => p.Name, new { @class = "form-control" })
                 @Html.ValidationMessageFor(p => p.Name)
             </td>
         </tr>

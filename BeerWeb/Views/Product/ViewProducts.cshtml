@@ -40,7 +40,7 @@
         @if (User.IsInRole("Admin") || User.IsInRole("ProductManager"))
         {
             <td>@Html.ActionLink("Edit", "EditProduct", new { id = p.Id })</td>
-            <td> @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = p.Id }, new { onclick = "return confirm('Är du säker att du vill radera?');" })</td>
+            <td> @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = p.Id }, new { style="color:red;",onclick = "return confirm('Är du säker att du vill radera?');" })</td>
         }
     </tr>
     }
