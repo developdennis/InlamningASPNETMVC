@@ -179,7 +179,8 @@ namespace BeerWeb.Controllers
             }
 
         }
-
+        [HttpGet]
+        [AllowAnonymous]
         public ActionResult SearchResult(string sortOrder, string searchProduct)
         {
             var viewmodel = new ShowAllProductsViewModel();

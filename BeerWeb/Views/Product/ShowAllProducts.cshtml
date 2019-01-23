@@ -24,26 +24,25 @@
     <br /> <br />
 }
 
-<table class="table">
+<table class="table table-hover table-bordered">
     <tr>
         <th>@Html.ActionLink("Name","ShowAllProducts", new { sortOrder = Model.SortByNameParam })</th>
         <th>Description</th>
         <th>@Html.ActionLink("Price", "ShowAllProducts", new { sortOrder = Model.SortByPriceParam})</th>
-        <th></th>
     </tr>
     @foreach (var p in Model.ProductsList)
     {
     <tr>
         <td>@Html.ActionLink(p.Name, "ViewSingleProduct", new { id = p.Id }) </td>
         <td>@p.Description</td>
-        <td>@p.Price</td>
+        <td style="font-weight: bold;">@p.Price</td>
+
         @if (User.IsInRole("Admin") || User.IsInRole("ProductManager"))
         {
             <td>@Html.ActionLink("Edit", "EditProduct", new { id = p.Id })</td>
-            <td> @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = p.Id }, new { onclick = "return confirm('Är du säker att du vill radera?');" })</td>
+            <td> @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = p.Id }, new { style="color:red;" , onclick = "return confirm('Are you sure you want to delete?');" })</td>
         }
     </tr>
     }
-
 </table>
 

@@ -41,10 +41,8 @@
         {
             <td>@Html.ActionLink("Edit", "EditProduct", new { id = p.Id })</td>
             <td> @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = p.Id }, new { onclick = "return confirm('Är du säker att du vill radera?');" })</td>
-
         }
     </tr>
     }
-
 </table>
 

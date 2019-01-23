@@ -22,11 +22,10 @@
     }
     <br /> <br />
 }
-<table class="table">
+<table class="table table-bordered table-hover">
     <tr>
         <th>@Html.ActionLink("Name", "SearchResult", new { searchProduct = Model.Search, sortOrder = Model.SortByNameParam })</th>
         <th>@Html.ActionLink("Price", "SearchResult", new { searchProduct = Model.Search, sortOrder = Model.SortByPriceParam })</th>
-        <th></th>
         <th></th>
         <th></th>
     </tr>
@@ -34,14 +33,13 @@
     {
     <tr>
         <td> @c.Name</td>
-        <td>@c.Price</td>
+        <td style="font-weight: bold">@c.Price</td>
         <td> @Html.ActionLink("View product", "ViewSingleProduct", "Product", new { id = c.Id }, htmlAttributes: null)</td>
         @if (User.IsInRole("Admin") || User.IsInRole("ProductManager"))
         {
             <td> @Html.ActionLink("Edit", "EditProduct", "Product", new { id = c.Id }, htmlAttributes: null)</td>
-            <td> @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = c.Id }, new { onclick = "return confirm('Är du säker att du vill radera?');" })</td>
+            <td> @Html.ActionLink("Delete", "DeleteProduct", "Product", new { id = c.Id }, new { style="color:red;", onclick = "return confirm('Är du säker att du vill radera?');" })</td>
         }
-        <td></td>
     </tr>
     }
 </table>

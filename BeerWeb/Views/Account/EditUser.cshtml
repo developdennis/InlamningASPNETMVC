@@ -3,38 +3,17 @@
     ViewBag.Title = "EditUser";
 }
 
-<h2>Edit User</h2>
+<h2>Edit User @Model.UserName</h2>
 @using (Html.BeginForm(FormMethod.Post))
 {
-    <table class="table">
-        <tr>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>
-                @Html.HiddenFor(p => p.Id)
-                @Model.Email
-                @Html.ValidationMessageFor(p => p.Email)
-            </td>
-        </tr>
-        <tr>
-            <td>Username</td>
-            <td>
-                @Model.UserName
-                @Html.ValidationMessageFor(p => p.UserName)
-            </td>
-        </tr>
-        <tr>
+    <table class="table table-hover table-striped">
+<tr>
             <td>Role:</td>
             <td>
                 @Html.DropDownListFor(m => m.Role, Model.Roles,"choose a role")
                 @Html.ValidationMessageFor(m => m.Role)
             </td>
         </tr>
-
     </table>
-    <input type="submit" value="Save User" />
-
+    <input class="btn-danger" type="submit" value="Save User" />
 }

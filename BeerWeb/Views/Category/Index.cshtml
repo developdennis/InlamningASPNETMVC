@@ -24,22 +24,21 @@
 }
 
 <div>
-    <ul>
+    <ul class="list-group">
         @if (User.IsInRole("Admin") || User.IsInRole("ProductManager"))
         {
-            <li>@Html.ActionLink("Add new category", "NewCategory", "Category")</li>
-            <li>@Html.ActionLink("Add new product", "NewProduct", "Product")</li>
+            <li style="text-align:center" class="list-group-item">@Html.ActionLink("Add new category", "NewCategory", "Category")</li>
+            <li style="text-align:center" class="list-group-item">@Html.ActionLink("Add new product", "NewProduct", "Product")</li>
         }
     </ul>
 </div>
 
-<table class="table">
+<table class="table table-bordered table-hover" >
     <tr>
         <th>Category Name</th>
         <th></th>
         <th></th>
-        <th></th>
-        <th></th>
+
     </tr>
     @foreach (var c in Model.CategoryList)
     {
@@ -50,9 +49,9 @@
         @if (User.IsInRole("Admin") || User.IsInRole("ProductManager"))
         {
             <td> @Html.ActionLink("Edit category", "EditCategory", "Category", new { id = c.Id }, htmlAttributes: null)</td>
-            <td> @Html.ActionLink("Delete category", "DeleteCategory", "Category", new { id = c.Id },  new { onclick = "return confirm('Are you sure you want to delete this category?');" })</td>
+            <td> @Html.ActionLink("Delete category", "DeleteCategory", "Category", new { id = c.Id },  new { style="color:red;" , onclick = "return confirm('Are you sure you want to delete this category?');" })</td>
         }
-        <td></td>
+       
     </tr>
     }
 </table>
