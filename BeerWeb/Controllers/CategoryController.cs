@@ -26,7 +26,6 @@ namespace BeerWeb.Controllers
         public ActionResult NewCategory()
         {
             var model = new ViewModels.NewCategoryViewModel();
-
             return View(model);
         }
 
@@ -81,13 +80,12 @@ namespace BeerWeb.Controllers
                 cat.Name = model.Name;
 
                 entities.SaveChanges();
-
                 return RedirectToAction("Index");
             }
-
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin,ProductManager")]
         public ActionResult DeleteCategory(int id)
         {
             using (var entities = new BeerModel())

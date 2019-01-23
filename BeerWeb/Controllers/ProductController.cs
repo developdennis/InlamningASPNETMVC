@@ -18,11 +18,10 @@ namespace BeerWeb.Controllers
             {
                 var viewmodel = new ViewModels.ViewProductsViewModel();
                 viewmodel.ProductsList.AddRange(entities.Products.Where(x => x.Category_Id == id));
-
-
                 return View(viewmodel);
             }
         }
+
         public JsonResult GetMoreInfo(int id)
         {
             using (var db = new BeerModel())
@@ -34,7 +33,6 @@ namespace BeerWeb.Controllers
                 return Json(model, JsonRequestBehavior.AllowGet);
             }
         }
-
 
         [HttpGet]
         public ActionResult ViewSingleProduct(int id)
@@ -65,6 +63,7 @@ namespace BeerWeb.Controllers
                 return RedirectToAction("Index", "Category");
             }
         }
+
         [HttpGet]
         [Authorize(Roles = "Admin,ProductManager")]
         public ActionResult EditProduct(int id)
@@ -179,6 +178,7 @@ namespace BeerWeb.Controllers
             }
 
         }
+
         [HttpGet]
         [AllowAnonymous]
         public ActionResult SearchResult(string sortOrder, string searchProduct)
@@ -192,7 +192,6 @@ namespace BeerWeb.Controllers
                 viewmodel = Sort(sortOrder, viewmodel);
 
                 return View(viewmodel);
-
             }
         }
 
@@ -210,8 +209,7 @@ namespace BeerWeb.Controllers
         }
 
         public ShowAllProductsViewModel Sort(string sortOrder, ShowAllProductsViewModel model)
-        {
-
+        { 
             model.SortByNameParam = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             model.SortByPriceParam = sortOrder == "Price" ? "price_desc" : "Price";
 
@@ -233,9 +231,7 @@ namespace BeerWeb.Controllers
                     model.ProductsList = model.ProductsList.OrderBy(x => x.Name).ToList();
                     break;
             }
-            
             return model;
-            
         }
     }
 }
